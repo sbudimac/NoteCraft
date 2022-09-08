@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoteCraftMAUI", "NoteCraftMAUI\NoteCraftMAUI.csproj", "{B32C84D6-8126-4008-BC2F-87C7A2CD17C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteCraftAPI", "NoteCraftAPI\NoteCraftAPI.csproj", "{7D90EF8F-F504-4E38-B271-56D66837E13F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteCraftModels", "NoteCraftModels\NoteCraftModels.csproj", "{E6076F7F-1148-448E-B11D-28987B1958BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +21,14 @@ Global
 		{B32C84D6-8126-4008-BC2F-87C7A2CD17C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B32C84D6-8126-4008-BC2F-87C7A2CD17C9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B32C84D6-8126-4008-BC2F-87C7A2CD17C9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{7D90EF8F-F504-4E38-B271-56D66837E13F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D90EF8F-F504-4E38-B271-56D66837E13F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D90EF8F-F504-4E38-B271-56D66837E13F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D90EF8F-F504-4E38-B271-56D66837E13F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6076F7F-1148-448E-B11D-28987B1958BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6076F7F-1148-448E-B11D-28987B1958BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6076F7F-1148-448E-B11D-28987B1958BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6076F7F-1148-448E-B11D-28987B1958BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
