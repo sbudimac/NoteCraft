@@ -7,8 +7,8 @@ namespace NoteCraftAPI.Mapper
     {
         public UserProfile()
         {
-            CreateMap<User, UserDto>();
-            CreateMap<UserDto, User>();
+            CreateMap<User, UserCreateDto>();
+            CreateMap<UserCreateDto, User>();
         }
     }
 }

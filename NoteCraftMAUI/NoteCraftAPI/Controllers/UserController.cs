@@ -17,7 +17,7 @@ namespace NoteCraftAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<User> GetById(string id)
+        public ActionResult<UserDto> GetById(string id)
         {
             var user = userService.GetById(id);
             if (user == null)
@@ -25,11 +25,11 @@ namespace NoteCraftAPI.Controllers
                 return NotFound($"User with Id = {id} not found.");
             }
 
-            return user;
+            return new UserDto (user.Username, user.Email);
         }
 
         [HttpPost("register")]
-        public ActionResult<User> Register([FromBody] UserDto user)
+        public ActionResult<UserAuthResponse> Register([FromBody] UserCreateDto user)
         {
             try
             {
@@ -44,7 +44,10 @@ namespace NoteCraftAPI.Controllers
                     ModelState.AddModelError("username", "Username is already in use.");
                     return BadRequest(ModelState);
                 }
-                return Ok(userService.Register(user));
+
+                var registered = userService.Register(user);
+                string token = userService.CreateToken(registered);
+                return Ok(new UserAuthResponse(new UserDto(registered.Username, registered.Email), token));
             }
             catch (Exception)
             {
@@ -53,7 +56,7 @@ namespace NoteCraftAPI.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult<string> Login(UserAuthDto request)
+        public ActionResult<UserAuthResponse> Login([FromBody] UserAuthRequest request)
         {
             var user = userService.GetByUsername(request.Username);
             if (user == null)
@@ -68,7 +71,7 @@ namespace NoteCraftAPI.Controllers
 
             string token = userService.CreateToken(user);
 
-            return Ok(token);
+            return Ok(new UserAuthResponse(new UserDto(user.Username, user.Email), token));
         }
 
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)

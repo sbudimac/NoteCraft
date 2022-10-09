@@ -1,0 +1,39 @@
+﻿@page "/"
+@using Helpers
+@using Newtonsoft.Json
+@using System.IdentityModel.Tokens.Jwt
+@using System.Net
+@inject NavigationManager navigationManager
+
+<h3>AppLaunch</h3>
+
+Loading...
+
+@code {
+    protected async override Task OnInitializedAsync()
+    {
+        string userDetails = await SecureStorage.GetAsync(nameof(StaticInfo.UserBasicDetails));
+
+        if (!string.IsNullOrWhiteSpace(userDetails))
+        {
+            var userBasicDetails = JsonConvert.DeserializeObject<UserBasicDetails>(userDetails);
+
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(userBasicDetails.Token) as JwtSecurityToken;
+
+            if (jsonToken.ValidTo < DateTime.UtcNow)
+            {
+                navigationManager.NavigateTo("/login");
+            }
+            else
+            {
+                StaticInfo.UserBasicDetails = userBasicDetails;
+                navigationManager.NavigateTo("/home");
+            }
+        }
+        else
+        {
+            navigationManager.NavigateTo("/login");
+        }
+    }
+}

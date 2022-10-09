@@ -1,0 +1,16 @@
+﻿@page "/auth"
+
+<button class="tablink" @onclick="SwitchToLogin">Sign In</button>
+<button class="tablink" @onclick="SwitchToRegister">Sign Up</button>
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        @if (SignIn)
+        {
+            <Login />
+        }
+        else
+        {
+            <Register />
+        }
+    </div>
+</div>

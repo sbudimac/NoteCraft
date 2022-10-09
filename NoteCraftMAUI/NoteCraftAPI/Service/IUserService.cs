@@ -6,7 +6,7 @@ namespace NoteCraftAPI.Service
     {
         User GetById(string id);
         User GetByUsername(string username);
-        User Register(UserDto userToRegister);
+        User Register(UserCreateDto userToRegister);
         string CreateToken(User user);
     }
 }

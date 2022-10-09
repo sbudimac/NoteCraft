@@ -1,0 +1,41 @@
+﻿@page "/register"
+
+<EditForm Model="@NewUser" OnValidSubmit="RegisterUser">
+    <DataAnnotationsValidator />
+    <div class="form-group-row">
+        <label for="username" class="col-sm-2 col-form-label">
+            Username
+        </label>
+        <div class="col-sm-8">
+            <InputText id="username" class="form-control" DisplayName="Username" @bind-Value="NewUser.Username" />
+            <ValidationMessage For="@(() => NewUser.Username)" />
+        </div>
+    </div>
+    <div class="form-group-row">
+        <label for="email" class="col-sm-2 col-form-label">
+            Email
+        </label>
+        <div class="col-sm-8">
+            <InputText id="email" class="form-control" DisplayName="Email" @bind-Value="NewUser.Email" />
+            <ValidationMessage For="@(() => NewUser.Username)" />
+        </div>
+    </div>
+    <div class="form-group-row">
+        <label for="password" class="col-sm-2 col-form-label">
+            Password
+        </label>
+        <div class="col-sm-8">
+            <InputText id="password" class="form-control" type="password" DisplayName="Password" @bind-Value="NewUser.Password" />
+            <ValidationMessage For="@(() => NewUser.Password)" />
+        </div>
+    </div>
+    <div class="mt-2 text-end">
+        <NavLink class="nav-link" href="login">
+            <span>Already have an account?</span>
+        </NavLink>
+    </div>
+    <button class="btn btn-primary" type="submit">
+        <span class="@spinnerClass" role="status" aria-hidden="true"></span>
+        Register
+    </button>
+</EditForm>

@@ -27,7 +27,7 @@ namespace NoteCraftAPI.Service.Implementation
             return userRepository.GetById(id);
         }
 
-        public User Register(UserDto userToRegister)
+        public User Register(UserCreateDto userToRegister)
         {
             User user = mapper.Map<User>(userToRegister);
             CreatePasswordHash(userToRegister.Password, out byte[] passwordHash, out byte[] passwordSalt);

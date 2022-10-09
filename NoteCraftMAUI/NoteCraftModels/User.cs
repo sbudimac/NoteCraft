@@ -16,7 +16,7 @@ namespace NoteCraftModels
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "First Name must be provided")]
+        [Required(ErrorMessage = "Username must be provided")]
         [MinLength(2)]
         [BsonElement("username")]
         public string Username { get; set; } = string.Empty;
