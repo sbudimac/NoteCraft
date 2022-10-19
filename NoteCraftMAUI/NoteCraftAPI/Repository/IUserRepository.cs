@@ -7,5 +7,6 @@ namespace NoteCraftAPI.Repository
         User GetById(string id);
         User GetByUsername(string username);
         User Register(User user);
+        User UpdateUser(string userId, User user);
     }
 }

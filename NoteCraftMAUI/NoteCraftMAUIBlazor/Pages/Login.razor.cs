@@ -38,10 +38,12 @@ namespace NoteCraftMAUIBlazor.Pages
                     var handler = new JwtSecurityTokenHandler();
                     var jsonToken = handler.ReadToken(response) as JwtSecurityToken;
 
+                    string id = jsonToken.Claims.FirstOrDefault(f => f.Type == ClaimTypes.NameIdentifier).Value;
                     string username = jsonToken.Claims.FirstOrDefault(f => f.Type == ClaimTypes.Name).Value;
 
                     var userBasicDetails = new UserBasicDetails
                     {
+                        Id = id,
                         Username = username,
                         Token = response
                     };

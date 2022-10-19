@@ -2,7 +2,7 @@
 
 <EditForm Model="@UserAuth" OnValidSubmit="LoginUser">
     <DataAnnotationsValidator />
-    <div class="form-group row">
+    <div class="form-group">
         <label for="username" class="col-sm-2 col-form-label">
             Username
         </label>
@@ -11,7 +11,7 @@
             <ValidationMessage For="@(() => UserAuth.Username)" />
         </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group">
         <label for="password" class="col-sm-2 col-form-label">
             Password
         </label>

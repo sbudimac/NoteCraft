@@ -55,6 +55,7 @@ namespace NoteCraftAPI.Service.Implementation
         {
             List<Claim> claims = new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user.Username)
             };
 

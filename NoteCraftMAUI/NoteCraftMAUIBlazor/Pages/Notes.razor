@@ -1,0 +1,35 @@
+﻿@page "/notes"
+
+<h3>Your Notes</h3>
+<hr />
+
+@if(UserNotes.Any())
+{
+    string currentTitle = "";
+    foreach(var note in UserNotes)
+    {
+        currentTitle = note.Title;
+        <div class="card row" style="width:22.5%;margin:10px;float:left;">
+            <div class="card-header">
+                <h5>@note.Title</h5>
+            </div>
+            <div class="card-body" style="@SetImportance(note.NoteImportance.ToString())">
+                <p class="card-title">
+                    @note.Description
+                </p>
+            </div>
+            <div class="card-footer">
+                <input class="btn btn-primary" type="button" value="View" @onclick="() => Open(note.Id)" style=" float:left;margin-right:5px;">
+                <input class="btn btn-primary" type="button" value="Edit" @onclick="() => Update_Note(note.Id)" style="float:left;">
+                <input class="btn btn-danger" type="button" value="Delete" @onclick="() => Delete_Note(note.Id)" style="float:right;">
+            </div>
+        </div>
+    }
+    <Confirm @ref="DeleteConfirmation" ConfirmationChanged="Confirm_Delete"
+         ConfirmationMessage=@($"Are you sure you want to delete note titled {currentTitle}?")>
+    </Confirm>
+}
+else
+{
+    <h5>You currently have no notes</h5>
+}

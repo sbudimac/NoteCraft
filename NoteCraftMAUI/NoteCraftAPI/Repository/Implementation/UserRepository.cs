@@ -30,5 +30,12 @@ namespace NoteCraftAPI.Repository.Implementation
 
             return user;
         }
+
+        public User UpdateUser(string userId, User user)
+        {
+            users.ReplaceOne(user => user.Id == userId, user);
+
+            return user;
+        }
     }
 }

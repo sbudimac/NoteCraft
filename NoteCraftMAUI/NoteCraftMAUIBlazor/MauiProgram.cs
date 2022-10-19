@@ -31,6 +31,7 @@ namespace NoteCraftMAUIBlazor
             builder.Services
                 .AddScoped<IAuthenticationService, AuthenticationService>()
                 .AddScoped<IUserService, UserService>()
+                .AddScoped<INoteService, NoteService>()
                 .AddScoped<IHttpService, HttpService>();
 
             builder.Services.AddScoped(x =>

@@ -1,0 +1,36 @@
+﻿@page "/note_details/{noteId}"
+@using NoteCraftModels
+
+<h3>NoteDetails</h3>
+
+@if(NoteToDisplay != null)
+{
+    <div class="note-content">
+        <h1 class="center-text">@NoteToDisplay.Title</h1>
+        <h4>@NoteToDisplay.Description</h4>
+        <hr />
+        @if (NoteToDisplay.NoteType.Equals(NoteType.Text))
+        {
+            <p>@NoteToDisplay.Content</p>
+        }
+        else if (NoteToDisplay.NoteType.Equals(NoteType.Picture))
+        {
+            <img src="@NoteToDisplay.Content" class="center-image" />
+        }
+        else
+        {
+            <p>Unrecognized content type cannot be displayed.</p>
+        }
+    </div>
+    <hr />
+    <h4>Comments</h4>
+    @foreach(var comment in NoteToDisplay.Comments)
+    {
+        
+    }
+}
+else
+{
+    <p>No note details found</p>
+}
+<input class="btn btn-primary" type="button" value="Back" style="float:left" @onclick="Back" />

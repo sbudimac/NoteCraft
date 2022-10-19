@@ -25,7 +25,7 @@ namespace NoteCraftAPI.Controllers
                 return NotFound($"User with Id = {id} not found.");
             }
 
-            return new UserDto (user.Username, user.Email);
+            return Ok(new UserDto (user.Username, user.Email));
         }
 
         [HttpPost("register")]
@@ -58,6 +58,7 @@ namespace NoteCraftAPI.Controllers
         [HttpPost("login")]
         public ActionResult<UserAuthResponse> Login([FromBody] UserAuthRequest request)
         {
+            Console.WriteLine("LOGIN");
             var user = userService.GetByUsername(request.Username);
             if (user == null)
             {

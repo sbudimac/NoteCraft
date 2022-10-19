@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -31,5 +32,8 @@ namespace NoteCraftModels
 
         [BsonElement("password_salt")]
         public byte[] PasswordSalt { get; set; } = Array.Empty<byte>();
+
+        [BsonElement("notes")]
+        public List<Note> UserNotes { get; set; } = new List<Note>();
     }
 }

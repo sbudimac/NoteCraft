@@ -1,0 +1,86 @@
+﻿@page "/create_note"
+@using NoteCraftModels
+
+<h1>Create a new note:</h1>
+
+<EditForm Model="@NoteToCreate" OnValidSubmit="Create">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="title" class="col-sm-2 col-form-label">
+            Title
+        </label>
+        <div class="col-sm-8">
+            <InputText id="title" class="form-control" DisplayName="Title" @bind-Value="NoteToCreate.Title" />
+            <ValidationMessage For="@(() => NoteToCreate.Title)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="description" class="col-sm-2 col-form-label">
+            Description
+        </label>
+        <div class="col-sm-8">
+            <InputText id="description" class="form-control" DisplayName="Description" @bind-Value="NoteToCreate.Description" />
+            <ValidationMessage For="@(() => NoteToCreate.Description)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="content" class="col-sm-2 col-form-label">
+            Content
+        </label>
+        @if (NoteToCreate.NoteType == NoteCraftModels.NoteType.Text)
+        {
+            <div class="col-sm-8">
+                <InputTextArea id="content" class="form-control" DisplayName="Content" @bind-Value="NoteToCreate.Content" />
+                <ValidationMessage For="@(() => NoteToCreate.Content)" />
+            </div>
+        }
+        else if (NoteToCreate.NoteType == NoteCraftModels.NoteType.Picture)
+        {
+            <div class="row">
+                <label for="upload" class="col-sm-2 col-form-label">
+                    Upload files:
+                </label>
+                <InputFile OnChange="OnPictureFileChange" class="form-control" />
+                <div>
+                    <img src="@NoteToCreate.Content" class="rounded" style="max-height: 200px;" />
+                </div>
+            </div>
+        }
+        else
+        {
+            <p>Work in progress...</p>
+        }
+    </div>
+    <div class="form-group radio">
+        <label for="type" class="col-sm-2 col-form-label group-title">
+            Note Type: 
+        </label>
+        <InputSelect id="type" @bind-Value="NoteToCreate.NoteType" class="form-control" style="margin-left:20px;width:30%;">
+            <option value="@NoteType.Text">@NoteType.Text.ToString()</option>
+            <option value="@NoteType.Picture">@NoteType.Picture.ToString()</option>
+            <option value="@NoteType.List">@NoteType.List.ToString()</option>
+            <option value="@NoteType.Table">@NoteType.Table.ToString()</option>
+        </InputSelect>
+    </div>
+    <div class="radio">
+        <label for="importance" class="col-sm-2 col-form-label group-title">
+            Note Importance:
+        </label>
+        <br />
+        <InputRadioGroup id="importance" @bind-Value="NoteToCreate.NoteImportance" class="form-control">
+            <InputRadio Value="@NoteImportance.Low" style="margin-left:20px;" />
+            <span>@NoteImportance.Low.ToString()</span>
+            <br />
+            <InputRadio Value="@NoteImportance.Medium" style="margin-left:20px;" />
+            <span>@NoteImportance.Medium.ToString()</span>
+            <br />
+            <InputRadio Value="@NoteImportance.High" style="margin-left:20px;" />
+            <span>@NoteImportance.High.ToString()</span>
+        </InputRadioGroup>
+    </div>
+    <hr />
+    <button class="btn btn-primary" type="submit">
+        <span class="@spinnerClass" role="status" aria-hidden="true"></span>
+        Create
+    </button>
+</EditForm>

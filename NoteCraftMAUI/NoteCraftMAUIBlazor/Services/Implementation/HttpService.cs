@@ -39,6 +39,19 @@ namespace NoteCraftMAUIBlazor.Services.Implementation
             return await sendRequest<T>(request);
         }
 
+        public async Task<T> Put<T>(string uri, object value)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Put, uri);
+            request.Content = new StringContent(JsonSerializer.Serialize(value), Encoding.UTF8, "application/json");
+            return await sendRequest<T>(request);
+        }
+
+        public async Task Delete(string uri)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Delete, uri);
+            await sendRequest(request);
+        }
+
         private async Task<T> sendRequest<T>(HttpRequestMessage request)
         {
             // add jwt auth header if user is logged in and request is to the api url
@@ -62,6 +75,30 @@ namespace NoteCraftMAUIBlazor.Services.Implementation
             }
 
             return await response.Content.ReadFromJsonAsync<T>();
+        }
+
+        private async Task sendRequest(HttpRequestMessage request)
+        {
+            var isApiUrl = !request.RequestUri.IsAbsoluteUri;
+            if (StaticInfo.UserBasicDetails != null && isApiUrl)
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", StaticInfo.UserBasicDetails.Token);
+
+            // auto logout on 401 response
+            using var response = await httpClient.SendAsync(request);
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                navigationManager.NavigateTo("/login");
+                return;
+            }
+
+            // throw exception on error response
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadFromJsonAsync<Dictionary<string, object>>();
+                throw new Exception((string)error["message"]);
+            }
+
+            return;
         }
     }
 }
