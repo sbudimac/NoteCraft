@@ -23,9 +23,25 @@
     </div>
     <hr />
     <h4>Comments</h4>
+    <EditForm Model="@NoteToDisplay" OnValidSubmit="Comment">
+        <div class="form-group">
+            <label for="comment" class="col-sm-2 col-form-label">
+                Enter your comment:
+            </label>
+            <div class="col-sm-8">
+                <InputText id="comment" class="form-control" DisplayName="Comment" @bind-Value="NewComment.Content" />
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit" style="margin-top:10px;margin-bottom:15px;">
+            <span class="@spinnerClass" role="status" aria-hidden="true"></span>
+            Comment
+        </button>
+    </EditForm>
     @foreach(var comment in NoteToDisplay.Comments)
     {
-        
+        <h5 style="font-weight:bold;">@comment.Author</h5>
+        <p>@comment.Content</p>
+        <hr />
     }
 }
 else

@@ -41,7 +41,15 @@ namespace NoteCraftAPI.Repository.Implementation
 
         public Note UpdateNote(string userId, string noteId, Note note)
         {
-            UpdateUserNote(userId, note);
+            if (note.OwnerId == userId)
+            {
+                UpdateUserNote(userId, note);
+            }
+            else
+            {
+                UpdateUserNote(note.OwnerId, note);
+            }
+            
             if (note.SharedUsers.Count > 0)
             {
                 UpdateSharedNote(note);
