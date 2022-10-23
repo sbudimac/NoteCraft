@@ -35,6 +35,9 @@ namespace NoteCraftModels
         [Required]
         public NoteImportance NoteImportance { get; set; } = NoteImportance.Medium;
 
+        [BsonElement("shared_users")]
+        public List<string> SharedUsers { get; set; } = new List<string>();
+
         [BsonElement("comments")]
         public List<Comment> Comments { get; set; } = new List<Comment>();
 

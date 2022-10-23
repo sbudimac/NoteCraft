@@ -3,13 +3,13 @@
 <h3>Your Notes</h3>
 <hr />
 
-@if(UserNotes.Any())
+@if (UserNotes.Any())
 {
     string currentTitle = "";
-    foreach(var note in UserNotes)
+    foreach (var note in UserNotes)
     {
         currentTitle = note.Title;
-        <div class="card row" style="width:22.5%;margin:10px;float:left;">
+        <div class="card row" style="width:27.5%;margin:10px;float:left;">
             <div class="card-header">
                 <h5>@note.Title</h5>
             </div>
@@ -19,15 +19,20 @@
                 </p>
             </div>
             <div class="card-footer">
-                <input class="btn btn-primary" type="button" value="View" @onclick="() => Open(note.Id)" style=" float:left;margin-right:5px;">
+                <span class="add-btn oi oi-plus" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop" @onclick="() => Share_Note(note.Id)" style="float:left;margin-right:5px;"></span>
+                <input class="btn btn-primary" type="button" value="View" @onclick="() => Open(note.Id)" style="float:left;margin-right:5px;">
                 <input class="btn btn-primary" type="button" value="Edit" @onclick="() => Update_Note(note.Id)" style="float:left;">
                 <input class="btn btn-danger" type="button" value="Delete" @onclick="() => Delete_Note(note.Id)" style="float:right;">
             </div>
         </div>
     }
+
     <Confirm @ref="DeleteConfirmation" ConfirmationChanged="Confirm_Delete"
-         ConfirmationMessage=@($"Are you sure you want to delete note titled {currentTitle}?")>
+            ConfirmationMessage=@($"Are you sure you want to delete note titled {currentTitle}?")>
     </Confirm>
+
+    <Share @ref="SharingDialog" SharingChanged="Confirm_Share">
+    </Share>
 }
 else
 {

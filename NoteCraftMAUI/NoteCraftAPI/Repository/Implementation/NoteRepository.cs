@@ -42,6 +42,10 @@ namespace NoteCraftAPI.Repository.Implementation
         public Note UpdateNote(string userId, string noteId, Note note)
         {
             UpdateUserNote(userId, note);
+            if (note.SharedUsers.Count > 0)
+            {
+                UpdateSharedNote(note);
+            }
             notes.ReplaceOne(note => note.Id == noteId, note);
 
             return note;
@@ -60,7 +64,7 @@ namespace NoteCraftAPI.Repository.Implementation
             userRepository.UpdateUser(userId, user);
         }
 
-        public void UpdateUserNote(string userId, Note note)
+        private void UpdateUserNote(string userId, Note note)
         {
             User user = userRepository.GetById(userId);
             for (int i = 0; i < user.UserNotes.Count; i++)
@@ -72,6 +76,17 @@ namespace NoteCraftAPI.Repository.Implementation
                 }
             }
             userRepository.UpdateUser(userId, user);
+        }
+
+        private void UpdateSharedNote(Note note)
+        {
+            foreach (var username in note.SharedUsers)
+            {
+                User user = userRepository.GetByUsername(username);
+                user.SharedNotes[note.Id] = note;
+                userRepository.UpdateUser(user.Id, user);
+                break;
+            }
         }
 
         public void RemoveNoteFromUser(string userId, string noteId)
@@ -86,6 +101,24 @@ namespace NoteCraftAPI.Repository.Implementation
                 }
             }
             userRepository.UpdateUser(userId, user);
+        }
+
+        public List<Note> GetShared(string userId)
+        {
+            User user = userRepository.GetById(userId);
+            var notes = new List<Note>(user.SharedNotes.Values);
+            return notes;
+        }
+
+        public Note ShareNote(string username, string noteId)
+        {
+            Note note = GetById(noteId);
+            note.SharedUsers.Add(username);
+            UpdateNote(note.OwnerId, noteId, note);
+            User user = userRepository.GetByUsername(username);
+            user.SharedNotes.Add(noteId, note);
+            userRepository.UpdateUser(user.Id, user);
+            return note;
         }
     }
 }

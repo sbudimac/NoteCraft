@@ -1,0 +1,29 @@
+﻿@page "/shared"
+
+<h3>Shared notes</h3>
+<hr />
+
+@if (SharedNotes.Any())
+{
+    @foreach (var note in SharedNotes)
+    {
+        <div class="card row" style="width:27.5%;margin:10px;float:left;">
+            <div class="card-header">
+                <h5>@note.Title</h5>
+            </div>
+            <div class="card-body" style="@SetImportance(note.NoteImportance.ToString())">
+                <p class="card-title">
+            @note.Description
+                </p>
+            </div>
+            <div class="card-footer">
+                <input class="btn btn-primary" type="button" value="View" @onclick="() => Open(note.Id)" style="float:left;margin-right:5px;">
+                <input class="btn btn-primary" type="button" value="Edit" @onclick="() => Update_Note(note.Id)" style="float:left;">
+            </div>
+        </div>
+    }
+}
+else
+{
+    <h5>No shared notes</h5>
+}

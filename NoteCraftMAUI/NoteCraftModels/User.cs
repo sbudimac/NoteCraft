@@ -35,5 +35,8 @@ namespace NoteCraftModels
 
         [BsonElement("notes")]
         public List<Note> UserNotes { get; set; } = new List<Note>();
+
+        [BsonElement("shared_notes")]
+        public Dictionary<string, Note> SharedNotes { get; set; } = new Dictionary<string, Note>();
     }
 }

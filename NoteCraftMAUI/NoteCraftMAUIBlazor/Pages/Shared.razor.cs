@@ -10,24 +10,19 @@ using System.Threading.Tasks;
 
 namespace NoteCraftMAUIBlazor.Pages
 {
-    public partial class Notes
+    public partial class Shared
     {
         [Inject]
         public INoteService NoteService { get; set; }
 
-        public List<Note> UserNotes { get; set; } = new List<Note>();
+        public List<Note> SharedNotes { get; set; } = new List<Note>();
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
-        [Parameter]
-        public EventCallback<int> OnNoteDeleted { get; set; }
-
-        public string CurrentId { get; set; } = string.Empty;
-
         protected override async Task OnInitializedAsync()
         {
-            UserNotes = await NoteService.GetByUser(StaticInfo.UserBasicDetails.Id);
+            SharedNotes = await NoteService.GetShared(StaticInfo.UserBasicDetails.Id);
             await base.OnInitializedAsync();
         }
 
@@ -56,36 +51,5 @@ namespace NoteCraftMAUIBlazor.Pages
         {
             NavigationManager.NavigateTo($"/update_note/{noteId}");
         }
-
-        protected ConfirmBase DeleteConfirmation { get; set; }
-
-        protected void Delete_Note(string noteId)
-        {
-            CurrentId = noteId;
-            DeleteConfirmation.Show();
-        }
-
-        protected async Task Confirm_Delete(bool deleteConfirmed)
-        {
-            if (deleteConfirmed)
-            {
-                await NoteService.DeleteNote(StaticInfo.UserBasicDetails.Id, CurrentId);
-                UserNotes = await NoteService.GetByUser(StaticInfo.UserBasicDetails.Id);
-            }
-        }
-
-        protected ShareBase SharingDialog { get; set; }
-
-        protected void Share_Note(string noteId)
-        {
-            CurrentId = noteId;
-            SharingDialog.Show();
-        }
-
-        protected async Task Confirm_Share(string username)
-        {
-            await NoteService.ShareNote(username, CurrentId);
-        }
-
     }
 }

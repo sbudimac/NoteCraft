@@ -53,5 +53,16 @@ namespace NoteCraftMAUIBlazor.Services.Implementation
         {
             await httpService.Delete($"api/note/{userId}/{noteId}");
         }
+
+        public async Task<List<Note>> GetShared(string userId)
+        {
+            var shared = await httpService.Get<List<Note>>($"api/note/shared/{userId}");
+            return shared;
+        }
+
+        public async Task ShareNote(string username, string noteId)
+        {
+            await httpService.Post($"api/note/share/{username}/{noteId}");
+        }
     }
 }

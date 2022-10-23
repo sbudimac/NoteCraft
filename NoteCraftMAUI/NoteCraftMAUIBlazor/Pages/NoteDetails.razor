@@ -7,8 +7,7 @@
 {
     <div class="note-content">
         <h1 class="center-text">@NoteToDisplay.Title</h1>
-        <h4>@NoteToDisplay.Description</h4>
-        <hr />
+        <h4 style="margin-bottom:15px;">@NoteToDisplay.Description</h4>
         @if (NoteToDisplay.NoteType.Equals(NoteType.Text))
         {
             <p>@NoteToDisplay.Content</p>
@@ -33,4 +32,4 @@ else
 {
     <p>No note details found</p>
 }
-<input class="btn btn-primary" type="button" value="Back" style="float:left" @onclick="Back" />
+<input class="btn btn-primary" type="button" value="Back" style="float:left;margin-top:20px;" @onclick="Back" />

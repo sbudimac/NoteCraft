@@ -58,7 +58,6 @@ namespace NoteCraftAPI.Controllers
         [HttpPost("login")]
         public ActionResult<UserAuthResponse> Login([FromBody] UserAuthRequest request)
         {
-            Console.WriteLine("LOGIN");
             var user = userService.GetByUsername(request.Username);
             if (user == null)
             {

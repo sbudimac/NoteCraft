@@ -8,11 +8,13 @@ namespace NoteCraftAPI.Service.Implementation
     {
         private readonly INoteRepository noteRepository;
         private readonly IMapper mapper;
+        private readonly IUserService userService;
 
-        public NoteService(INoteRepository noteRepository, IMapper mapper)
+        public NoteService(INoteRepository noteRepository, IMapper mapper, IUserService userService)
         {
             this.noteRepository = noteRepository;
             this.mapper = mapper;
+            this.userService = userService;
         }
 
         public Note GetById(string id)
@@ -46,6 +48,21 @@ namespace NoteCraftAPI.Service.Implementation
         public void DeleteNote(string userId, string id)
         {
             noteRepository.DeleteNote(userId, id);
+        }
+
+        public List<Note> GetShared(string userId)
+        {
+            return noteRepository.GetShared(userId);
+        }
+
+        public Note? ShareNote(string username, string noteId)
+        {
+            Console.WriteLine("SERVICE");
+            if (userService.GetByUsername(username) == null)
+            {
+                return null;
+            }
+            return noteRepository.ShareNote(username, noteId);
         }
     }
 }

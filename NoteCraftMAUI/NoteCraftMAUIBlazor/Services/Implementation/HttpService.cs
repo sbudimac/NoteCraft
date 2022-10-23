@@ -39,6 +39,12 @@ namespace NoteCraftMAUIBlazor.Services.Implementation
             return await sendRequest<T>(request);
         }
 
+        public async Task Post(string uri)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, uri);
+            await sendRequest(request);
+        }
+
         public async Task<T> Put<T>(string uri, object value)
         {
             var request = new HttpRequestMessage(HttpMethod.Put, uri);

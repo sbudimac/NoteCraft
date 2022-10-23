@@ -44,12 +44,13 @@ namespace NoteCraftMAUIBlazor.Pages
                     NoteToUpdate.Content,
                     NoteToUpdate.NoteType,
                     NoteToUpdate.NoteImportance,
+                    NoteToUpdate.SharedUsers,
                     NoteToUpdate.Comments,
                     NoteToUpdate.OwnerId
                     ));
                 if (response != null)
                 {
-                    await App.Current.MainPage.DisplayAlert("Success", "Note created successfully!", "OK");
+                    await App.Current.MainPage.DisplayAlert("Success", "Note updated successfully!", "OK");
                     NavigationManager.NavigateTo($"/note_details/{NoteId}");
                 }
                 else

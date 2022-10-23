@@ -42,7 +42,6 @@ namespace NoteCraftAPI.Controllers
         [HttpGet("user/{userId}")]
         public ActionResult<List<Note>> GetByUser(string userId)
         {
-            Console.WriteLine("GET");
             var note = noteService.GetByUser(userId);
             if (note == null)
             {
@@ -55,7 +54,6 @@ namespace NoteCraftAPI.Controllers
         [HttpPost("create")]
         public ActionResult<Note> CreateNote(NoteDto newNote)
         {
-            Console.WriteLine("POST");
             try
             {
                 if (newNote == null)
@@ -102,6 +100,33 @@ namespace NoteCraftAPI.Controllers
 
             noteService.DeleteNote(userId, noteId);
             return Ok($"Note with Id = {noteId} deleted.");
+        }
+
+        [HttpGet("shared/{userId}")]
+        public ActionResult<List<Note>> GetShared(string userId)
+        {
+            var shared = noteService.GetShared(userId);
+
+            if (shared == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(shared);
+        }
+
+        [HttpPost("share/{username}/{noteId}")]
+        public ActionResult ShareNote(string username, string noteId)
+        {
+            Console.WriteLine("CONTROLLER");
+            var sharedNote = noteService.ShareNote(username, noteId);
+            
+            if (sharedNote == null)
+            {
+                return NotFound("Username not found");
+            }
+
+            return Ok();
         }
     }
 }

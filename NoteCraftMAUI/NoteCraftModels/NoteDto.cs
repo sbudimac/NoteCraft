@@ -20,6 +20,7 @@ namespace NoteCraftModels
         public NoteType NoteType { get; set; } = NoteType.Text;
         [Required]
         public NoteImportance NoteImportance { get; set; } = NoteImportance.Medium;
+        public List<string> Sharedusers { get; set; } = new List<string>();
         public List<Comment> Comments { get; set; } = new List<Comment>();
         [Required]
         public string OwnerId { get; set; } = string.Empty;
@@ -29,23 +30,25 @@ namespace NoteCraftModels
 
         }
 
-        public NoteDto(string title, string content, NoteType noteType, NoteImportance noteImportance, List<Comment> comments, string ownerId)
+        public NoteDto(string title, string content, NoteType noteType, NoteImportance noteImportance, List<string> sharedUsers, List<Comment> comments, string ownerId)
         {
             Title = title;
             Content = content;
             NoteType = noteType;
             NoteImportance = noteImportance;
+            Sharedusers = sharedUsers;
             Comments = comments;
             OwnerId = ownerId;
         }
 
-        public NoteDto(string title, string description, string content, NoteType noteType, NoteImportance noteImportance, List<Comment> comments, string ownerId)
+        public NoteDto(string title, string description, string content, NoteType noteType, NoteImportance noteImportance, List<string> sharedUsers, List<Comment> comments, string ownerId)
         {
             Title = title;
             Description = description;
             Content = content;
             NoteType = noteType;
             NoteImportance = noteImportance;
+            Sharedusers = sharedUsers;
             Comments = comments;
             OwnerId = ownerId;
         }

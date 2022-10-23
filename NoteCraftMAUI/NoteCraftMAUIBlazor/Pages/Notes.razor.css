@@ -1,0 +1,9 @@
+﻿.add-btn {
+    vertical-align:baseline;
+    padding:10px;
+}
+
+.add-btn:hover {
+    border:2px solid black;
+    border-radius:25px;
+}

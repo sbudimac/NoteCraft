@@ -15,5 +15,7 @@ namespace NoteCraftMAUIBlazor.Services
         Task<Note> CreateNote(NoteDto newNote);
         Task<Note> UpdateNote(string userId, string noteId, NoteDto updatedNote);
         Task DeleteNote(string userId, string noteId);
+        Task<List<Note>> GetShared(string userId);
+        Task ShareNote(string username, string noteId);
     }
 }

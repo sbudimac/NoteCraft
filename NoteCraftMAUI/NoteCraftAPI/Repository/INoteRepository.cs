@@ -10,5 +10,7 @@ namespace NoteCraftAPI.Repository
         Note CreateNote(Note note);
         Note UpdateNote(string userId, string noteId, Note note);
         void DeleteNote(string userId, string id);
+        List<Note> GetShared(string userId);
+        Note ShareNote(string username, string noteId);
     }
 }
