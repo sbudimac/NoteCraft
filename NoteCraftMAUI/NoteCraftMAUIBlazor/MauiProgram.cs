@@ -9,6 +9,7 @@ using NoteCraftMAUIBlazor.Helpers;
 using Blazored.LocalStorage;
 using Microsoft.Maui.LifecycleEvents;
 using Microsoft.JSInterop;
+using System.Net;
 
 namespace NoteCraftMAUIBlazor
 {
@@ -28,6 +29,12 @@ namespace NoteCraftMAUIBlazor
 #if DEBUG
 		builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
+
+#if ANDROID && DEBUG
+            Platforms.Android.DangerousAndroidMessageHandlerEmitter.Register();
+            Platforms.Android.DangerousTrustProvider.Register();
+#endif
+
             builder.Services
                 .AddScoped<IAuthenticationService, AuthenticationService>()
                 .AddScoped<IUserService, UserService>()
@@ -39,7 +46,7 @@ namespace NoteCraftMAUIBlazor
                 var apiUrl = new Uri("https://localhost:7298/");
                 return new HttpClient() { BaseAddress = apiUrl };
             });
-            
+
             var host = builder.Build();
             var authenticationService = host.Services.GetRequiredService<IAuthenticationService>();
 

@@ -58,6 +58,7 @@ namespace NoteCraftAPI.Controllers
         [HttpPost("login")]
         public ActionResult<UserAuthResponse> Login([FromBody] UserAuthRequest request)
         {
+            Console.WriteLine("login");
             var user = userService.GetByUsername(request.Username);
             if (user == null)
             {
@@ -70,7 +71,7 @@ namespace NoteCraftAPI.Controllers
             }
 
             string token = userService.CreateToken(user);
-
+            Console.WriteLine("return");
             return Ok(new UserAuthResponse(new UserDto(user.Username, user.Email), token));
         }
 
