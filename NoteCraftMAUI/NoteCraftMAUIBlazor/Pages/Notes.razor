@@ -10,7 +10,7 @@
         @foreach (var note in UserNotes)
         {
             currentTitle = note.Title;
-            <div class="card col-md-3 col-5">
+            <div class="card col-md-4 col-12">
                 <div class="card-header">
                     <h5>@note.Title</h5>
                 </div>
@@ -19,11 +19,11 @@
                         @note.Description
                     </p>
                 </div>
-                <div class="card-footer">
-                    <span class="add-btn oi oi-plus" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop" @onclick="() => Share_Note(note.Id)" style="float:left;margin-right:5px;"></span>
-                    <input class="btn btn-primary" type="button" value="View" @onclick="() => Open(note.Id)" style="float:left;margin-right:5px;">
-                    <input class="btn btn-primary" type="button" value="Edit" @onclick="() => Update_Note(note.Id)" style="float:left;">
-                    <input class="btn btn-danger" type="button" value="Delete" @onclick="() => Delete_Note(note.Id)" style="float:right;">
+                <div class="card-footer row">
+                    <span class="add-btn oi oi-plus col-2" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop" @onclick="() => Share_Note(note.Id)"></span>
+                    <input class="btn btn-primary col-3" type="button" value="View" @onclick="() => Open(note.Id)">
+                    <input class="btn btn-primary col-3" type="button" value="Edit" @onclick="() => Update_Note(note.Id)">
+                    <input class="btn btn-danger col-3" type="button" value="Delete" @onclick="() => Delete_Note(note.Id)">
                 </div>
             </div>
         }
