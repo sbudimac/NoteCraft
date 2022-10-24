@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using NoteCraftMAUIBlazor.Helpers;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace NoteCraftMAUIBlazor.Pages
 {
@@ -28,14 +31,31 @@ namespace NoteCraftMAUIBlazor.Pages
             try
             {
                 var response = await AuthenticationService.Register(NewUser);
-                if (!string.IsNullOrEmpty(response))
+                if (!string.IsNullOrWhiteSpace(response))
                 {
-                    await App.Current.MainPage.DisplayAlert("Success", "Valid username and password!", "OK");
+                    var handler = new JwtSecurityTokenHandler();
+                    var jsonToken = handler.ReadToken(response) as JwtSecurityToken;
+
+                    string id = jsonToken.Claims.FirstOrDefault(f => f.Type == ClaimTypes.NameIdentifier).Value;
+                    string username = jsonToken.Claims.FirstOrDefault(f => f.Type == ClaimTypes.Name).Value;
+
+                    var userBasicDetails = new UserBasicDetails
+                    {
+                        Id = id,
+                        Username = username,
+                        Token = response
+                    };
+
+                    string basicUserInfoStr = Newtonsoft.Json.JsonConvert.SerializeObject(userBasicDetails);
+                    await SecureStorage.SetAsync(nameof(StaticInfo.UserBasicDetails), basicUserInfoStr);
+                    StaticInfo.UserBasicDetails = userBasicDetails;
+
+                    await App.Current.MainPage.DisplayAlert("Success", "Valid user information provided!", "OK");
                     NavigationManager.NavigateTo("/");
                 }
                 else
                 {
-                    await App.Current.MainPage.DisplayAlert("Error", "Invalid username or password", "OK");
+                    await App.Current.MainPage.DisplayAlert("Error", "Invalid user information provided", "OK");
                 }
             }
             catch (Exception)
